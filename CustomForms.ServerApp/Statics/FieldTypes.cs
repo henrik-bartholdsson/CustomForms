@@ -2,7 +2,8 @@
 {
     public enum FieldTypes
     {
-        Text,
-        Radio,
+        text,
+        number,
+        radio,
     }
 }
