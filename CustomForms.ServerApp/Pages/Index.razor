@@ -1,5 +1,4 @@
 ﻿@page "/"
-@inherits IndexBase
 
 <PageTitle>Index</PageTitle>
 
@@ -9,7 +8,44 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-@foreach (var f in TheForm.Fields)
-{
-    <InputField ViewModel="@f" />
+
+
+<EditForm Model="_FormInputField" OnSubmit="HandleSubmit">
+    @foreach (var f in TheForm.Fields)
+    {
+        <InputField FormInputField="@f" />
+    }
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public FormInputField _FormInputField { get; set; } = new FormInputField();
+    [Parameter]
+    public string TheValue { get; set; }
+
+
+
+    public void HandleSubmit()
+    {
+        var inpValue = _FormInputField.Data;
+
+        var asd = 1;
+    }
+
+
+
+
+    public Form TheForm { get; set; } = new Form();
+
+    protected override async Task OnInitializedAsync()
+    {
+        TheForm.Fields = new List<CustomForms.Data.FormInputField> {
+                new CustomForms.Data.FormInputField { Data = "Some text", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
+                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
+                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.text },
+                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.number }
+                };
+    }
 }

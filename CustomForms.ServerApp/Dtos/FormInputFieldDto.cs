@@ -1,12 +1,12 @@
 ﻿using CustomForms.Statics;
 
-namespace CustomForms.Data
+namespace CustomForms.ServerApp.Dtos
 {
-    public class FormInputField
+    public class FormInputFieldDto
     {
         public int Id { get; set; }
-        public string Data { get; set; } = string.Empty;
-        public int IntegerData { get; set; }
+        public string StringData { get; set; } = string.Empty;
+        public int IntegerData { get; set; } = 0;
         public FieldTypes FieldType { get; set; }
         public string MaxLength { get; set; } = string.Empty;
         public string MinLength { get; set; } = string.Empty;
