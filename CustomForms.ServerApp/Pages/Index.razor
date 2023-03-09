@@ -10,26 +10,26 @@ Welcome to your new app.
 
 
 
-<EditForm Model="_FormInputField" OnSubmit="HandleSubmit">
-    @foreach (var f in TheForm.Fields)
+<EditForm Model="TheForm" OnSubmit="HandleSubmit">
+    @foreach (var f in TheForm.FormFields)
     {
-        <InputField FormInputField="@f" />
+        <div style="margin-bottom:0,5em">
+            <InputField FormInputField="@f" />
+        </div>
+        <br />
     }
     <button type="submit">Submit</button>
 </EditForm>
 
 
 @code {
-    [Parameter]
-    public FormInputField _FormInputField { get; set; } = new FormInputField();
-    [Parameter]
-    public string TheValue { get; set; }
+    public Form TheForm { get; set; } = new Form();
 
 
 
     public void HandleSubmit()
     {
-        var inpValue = _FormInputField.Data;
+        var inpValues = TheForm;
 
         var asd = 1;
     }
@@ -37,15 +37,16 @@ Welcome to your new app.
 
 
 
-    public Form TheForm { get; set; } = new Form();
-
     protected override async Task OnInitializedAsync()
     {
-        TheForm.Fields = new List<CustomForms.Data.FormInputField> {
-                new CustomForms.Data.FormInputField { Data = "Some text", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
-                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
-                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.text },
-                new CustomForms.Data.FormInputField { Data = "", FieldType = FieldTypes.number }
+        TheForm.FormFields = new List<CustomForms.Data.FormInputField> {
+                new CustomForms.Data.FormInputField { Id = 1, Order = 1, Data = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Name" },
+                new CustomForms.Data.FormInputField { Id = 2, Order = 3, Data = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
+                new CustomForms.Data.FormInputField { Id = 3, Order = 2, Data = "", Name = "Address 1", FieldType = FieldTypes.text },
+                new CustomForms.Data.FormInputField { Id = 4, Order = 4, Data = "", Name = "Amount", FieldType = FieldTypes.number }
                 };
+
+        TheForm.FormFields = TheForm.FormFields.OrderBy(f => f.Order).ToList();
+
     }
 }
