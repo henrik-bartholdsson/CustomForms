@@ -52,7 +52,7 @@ else
     {
         if(!String.IsNullOrEmpty(Id))
         {
-            TheForm = FormService.GetBlankForm(int.Parse(Id));
+            TheForm = FormService.GetBlankFormByDispatch(Guid.Parse(Id));
         }
     }
 }

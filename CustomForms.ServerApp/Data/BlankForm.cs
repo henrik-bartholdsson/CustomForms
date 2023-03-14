@@ -4,5 +4,6 @@
     {
         public int Id { get; set; } = 0;
         public List<FormInputField> FormFields { get; set; } = new List<FormInputField>();
+        public string FormDescription { get; set; } = string.Empty;
     }
 }
