@@ -1,29 +1,41 @@
 ﻿@page "/"
+@page "/{id}"
 
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<PageTitle>First Static Form</PageTitle>
+<h2>First Static Form</h2>
+<br />
 
 
+@if (TheForm != null)
+{
+    <EditForm Model="TheForm" OnSubmit="HandleSubmit">
+        @foreach (var f in TheForm.FormFields)
+        {
+            <div style="margin-bottom:0.7em">
+                <InputField FormInputField="@f" />
+            </div>
+        }
+        <button type="submit">Submit</button>
+    </EditForm>
+}
+else
+{
+    <p>No form selected</p>
+}
 
-<EditForm Model="TheForm" OnSubmit="HandleSubmit">
-    @foreach (var f in TheForm.FormFields)
-    {
-        <div style="margin-bottom:0,5em">
-            <InputField FormInputField="@f" />
-        </div>
-        <br />
-    }
-    <button type="submit">Submit</button>
-</EditForm>
+
+
+
 
 
 @code {
-    public Form TheForm { get; set; } = new Form();
+    [Inject]
+    public IFormService FormService { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public BlankForm TheForm { get; set; }
 
 
 
@@ -36,17 +48,11 @@ Welcome to your new app.
 
 
 
-
     protected override async Task OnInitializedAsync()
     {
-        TheForm.FormFields = new List<CustomForms.Data.FormInputField> {
-                new CustomForms.Data.FormInputField { Id = 1, Order = 1, Data = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Name" },
-                new CustomForms.Data.FormInputField { Id = 2, Order = 3, Data = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
-                new CustomForms.Data.FormInputField { Id = 3, Order = 2, Data = "", Name = "Address 1", FieldType = FieldTypes.text },
-                new CustomForms.Data.FormInputField { Id = 4, Order = 4, Data = "", Name = "Amount", FieldType = FieldTypes.number }
-                };
-
-        TheForm.FormFields = TheForm.FormFields.OrderBy(f => f.Order).ToList();
-
+        if(!String.IsNullOrEmpty(Id))
+        {
+            TheForm = FormService.GetBlankForm(int.Parse(Id));
+        }
     }
 }

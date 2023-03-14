@@ -1,0 +1,31 @@
+﻿@page "/form/{Id}"
+<h3>Form</h3>
+
+@IdNumber
+@if (IdNumber < 10)
+{
+    <p>
+        Id: @IdNumber
+    </p>
+}
+else
+{
+    <p>
+        No form avalible..
+    </p>
+}
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    public int IdNumber { get; set; } = 0;
+
+    protected override Task OnInitializedAsync()
+    {
+        var intId = 0;
+        int.TryParse(Id, out intId);
+        IdNumber = intId + 1;
+
+        return base.OnInitializedAsync();
+    }
+}
