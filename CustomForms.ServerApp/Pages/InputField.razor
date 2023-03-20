@@ -10,7 +10,7 @@
             <label for="@FormInputField.Id">@FormInputField.Name</label>
             <br />
         }
-        <InputText id="@FormInputField.Id" @bind-Value="@FormInputField.Data" placeholder="@FormInputField.Placeholder" />
+        <InputText id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" placeholder="@FormInputField.Placeholder" />
         break;
     case Statics.FieldTypes.number:
         <label for="@FormInputField.Id">@FormInputField.Name</label>
@@ -19,7 +19,7 @@
         break;
 
     default:
-        <InputTextArea id="@FormInputField.Id" @bind-Value="@FormInputField.Data" />
+        <InputTextArea id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" />
         break;
 
 }
@@ -29,5 +29,5 @@
 
 @code {
     [Parameter]
-    public FormInputField FormInputField { get; set; }
+    public FormInputFieldDefinition FormInputField { get; set; }
 }

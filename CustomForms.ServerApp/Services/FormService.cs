@@ -18,11 +18,11 @@ namespace CustomForms.ServerApp.Services
             _blankForms.Add(
                 new BlankForm
                 {
-                    FormFields = new List<CustomForms.Data.FormInputField> {
-                        new CustomForms.Data.FormInputField { Id = 1, Order = 1, Data = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Name" },
-                        new CustomForms.Data.FormInputField { Id = 2, Order = 3, Data = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
-                        new CustomForms.Data.FormInputField { Id = 3, Order = 2, Data = "", Name = "Address 1", FieldType = FieldTypes.text },
-                        new CustomForms.Data.FormInputField { Id = 4, Order = 4, Data = "", Name = "Amount", FieldType = FieldTypes.number }
+                    FormFields = new List<CustomForms.Data.FormInputFieldDefinition> {
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 1, Order = 1, StringData = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Name" },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 2, Order = 3, StringData = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 3, Order = 2, StringData = "", Name = "Address 1", FieldType = FieldTypes.text },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 4, Order = 4, StringData = "", Name = "Amount", FieldType = FieldTypes.number }
                     },
                     Id = 5,
                     FormDescription = "Customer Registration"
@@ -31,11 +31,11 @@ namespace CustomForms.ServerApp.Services
             _blankForms.Add(
                 new BlankForm
                 {
-                    FormFields = new List<CustomForms.Data.FormInputField> {
-                        new CustomForms.Data.FormInputField { Id = 1, Order = 1, Data = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Company Name" },
-                        new CustomForms.Data.FormInputField { Id = 2, Order = 3, Data = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
-                        new CustomForms.Data.FormInputField { Id = 3, Order = 2, Data = "", Name = "Address 1", FieldType = FieldTypes.text },
-                        new CustomForms.Data.FormInputField { Id = 4, Order = 4, Data = "", Name = "Amount Employees", FieldType = FieldTypes.number }
+                    FormFields = new List<CustomForms.Data.FormInputFieldDefinition> {
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 1, Order = 1, StringData = "", Name = "", FieldType = FieldTypes.text, Placeholder = "Company Name" },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 2, Order = 3, StringData = "", Name = "Address 2", FieldType = FieldTypes.text, Placeholder = "plceholder text" },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 3, Order = 2, StringData = "", Name = "Address 1", FieldType = FieldTypes.text },
+                        new CustomForms.Data.FormInputFieldDefinition { Id = 4, Order = 4, StringData = "", Name = "Amount Employees", FieldType = FieldTypes.number }
                     },
                     Id = 6,
                     FormDescription = "Company Registration"
@@ -61,7 +61,7 @@ namespace CustomForms.ServerApp.Services
 
             if(blankform == null)
             {
-                throw new Exception("No form avalible");
+                throw new Exception("Utskick finns ej");
             }
 
             return blankform;
