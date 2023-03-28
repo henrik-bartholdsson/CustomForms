@@ -1,5 +1,5 @@
-﻿using CustomForms.Statics;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomForms.ServerApp.Data
 {
@@ -8,7 +8,7 @@ namespace CustomForms.ServerApp.Data
         [Key]
         public int Id { get; set; }
         public string Data { get; set; }
-        public int Order { get; set; } = 0;
-        public FieldTypes FieldType { get; set; }
+        [ForeignKey("Dispatch")]
+        public Guid DispatchId { get; set; }
     }
 }

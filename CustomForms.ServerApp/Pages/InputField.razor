@@ -4,15 +4,16 @@
 
 @switch (FormInputField.FieldType)
 {
-    case Statics.FieldTypes.text:
+    case FieldTypes.text:
         if (!String.IsNullOrEmpty(FormInputField.Name))
         {
             <label for="@FormInputField.Id">@FormInputField.Name</label>
             <br />
         }
         <InputText id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" placeholder="@FormInputField.Placeholder" />
+        <ValidationMessage For="@(() => FormInputField.StringData)" />
         break;
-    case Statics.FieldTypes.number:
+    case FieldTypes.number:
         <label for="@FormInputField.Id">@FormInputField.Name</label>
         <br />
         <InputNumber id="@FormInputField.Id" TValue="int" @bind-Value="@FormInputField.IntegerData" />
@@ -20,6 +21,7 @@
 
     default:
         <InputTextArea id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" />
+        <ValidationMessage For="@(() => FormInputField.StringData)" />
         break;
 
 }

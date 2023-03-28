@@ -1,58 +1,12 @@
 ﻿@page "/"
-@page "/{id}"
 
 <PageTitle>First Static Form</PageTitle>
 <h2>First Static Form</h2>
+
+
+
+<a href="https://localhost:7265/form/4495c5da-bb32-4916-967b-d35573d4ecbd">4495c5da-bb32-4916-967b-d35573d4ecbd</a>
+<br/>
+<a href="https://localhost:7265/form/e487e2fb-9bab-4311-a727-659b30110359">e487e2fb-9bab-4311-a727-659b30110359</a>
 <br />
-
-
-@if (TheForm != null)
-{
-    <EditForm Model="TheForm" OnSubmit="HandleSubmit">
-        @foreach (var f in TheForm.FormFields)
-        {
-            <div style="margin-bottom:0.7em">
-                <InputField FormInputField="@f" />
-            </div>
-        }
-        <button type="submit">Submit</button>
-    </EditForm>
-}
-else
-{
-    <p>No form selected</p>
-}
-
-
-
-
-
-
-@code {
-    [Inject]
-    public IFormService FormService { get; set; }
-
-    [Parameter]
-    public string Id { get; set; }
-
-    public BlankForm TheForm { get; set; }
-
-
-
-    public void HandleSubmit()
-    {
-        var inpValues = TheForm;
-
-        var asd = 1;
-    }
-
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        if(!String.IsNullOrEmpty(Id))
-        {
-            TheForm = FormService.GetBlankFormByDispatch(Guid.Parse(Id));
-        }
-    }
-}
+<a href="https://localhost:7265/form/0fc0c2f2-7c2f-4a15-951a-5366589745cc">0fc0c2f2-7c2f-4a15-951a-5366589745cc</a>
