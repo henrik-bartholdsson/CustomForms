@@ -1,0 +1,72 @@
+﻿@page "/form/{Id}"
+@page "/form"
+
+<PageTitle>First Static Form</PageTitle>
+<h2>First Static Form</h2>
+<br />
+
+
+@if (DispatchObj != null)
+{
+    <EditForm Model="DispatchObj" OnValidSubmit="HandleSubmit">
+        <ObjectGraphDataAnnotationsValidator />
+        <ValidationSummary />
+        @foreach (var f in DispatchObj.BlankForm.FormFields)
+        {
+            <div style="margin-bottom:0.7em">
+                <InputField FormInputField="@f" />
+            </div>
+        }
+        <button type="submit">Submit</button>
+    </EditForm>
+}
+else
+{
+    <p>No form selected</p>
+}
+
+@if (!String.IsNullOrEmpty(Message))
+{
+    <p>
+        @Message
+    </p>
+}
+
+
+
+
+@code {
+    [Inject]
+    public IFormService FormService { get; set; }
+
+    [Parameter]
+    public string Id { get; set; }
+
+    public Dispatch DispatchObj { get; set; }
+
+    public string Message { get; set; }
+
+    public void HandleSubmit()
+    {
+        FormService.SubmitForm(DispatchObj);
+        DispatchObj = null;
+        Message = Notices.BlankFormSubmitted;
+    }
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!String.IsNullOrEmpty(Id))
+        {
+            try
+            {
+                DispatchObj = await FormService.GetDispatch(Id);
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+        }
+    }
+}

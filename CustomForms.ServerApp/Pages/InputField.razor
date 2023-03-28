@@ -1,4 +1,35 @@
-﻿@inherits InputFieldBase
+﻿@using CustomForms.Data;
 
 
-<input type="@ViewModel.FieldType" value="@ViewModel.Data" placeholder="@ViewModel.Placeholder" />
+
+@switch (FormInputField.FieldType)
+{
+    case FieldTypes.text:
+        if (!String.IsNullOrEmpty(FormInputField.Name))
+        {
+            <label for="@FormInputField.Id">@FormInputField.Name</label>
+            <br />
+        }
+        <InputText id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" placeholder="@FormInputField.Placeholder" />
+        <ValidationMessage For="@(() => FormInputField.StringData)" />
+        break;
+    case FieldTypes.number:
+        <label for="@FormInputField.Id">@FormInputField.Name</label>
+        <br />
+        <InputNumber id="@FormInputField.Id" TValue="int" @bind-Value="@FormInputField.IntegerData" />
+        break;
+
+    default:
+        <InputTextArea id="@FormInputField.Id" @bind-Value="@FormInputField.StringData" />
+        <ValidationMessage For="@(() => FormInputField.StringData)" />
+        break;
+
+}
+
+
+
+
+@code {
+    [Parameter]
+    public FormInputFieldDefinition FormInputField { get; set; }
+}
