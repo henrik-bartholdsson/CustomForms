@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">@Title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => CloseModal()">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => DiscardAndCloseModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -11,28 +11,37 @@
                 @switch (FieldType)
                 {
                     case FieldTypes.text:
-                    <label for="name">Name</label>
-                        <input type="text" @bind-value="@ModalData.Name" id="name" />
-                        <br />
-                        <label for="data">Datafield</label>
-                        <input type="text" @bind-value="@ModalData.StringData" id="data" />
-                        <br />
-                        <label for="placeholder">Placeholder</label>
-                        <input type="text" @bind-value="@ModalData.Placeholder" id="placeholder" />
-                        <br />
-                        <label for="maxlength">Maxlength</label>
-                        <input type="text" @bind-value="@ModalData.MaxLength" id="maxlength" />
-                        <br />
-                        <label for="minlength">Maxlength</label>
-                        <input type="text" @bind-value="@ModalData.MinLength" id="minlength"/>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.Name" id="name" />
+                            <label for="name">Field name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.StringData" id="data" />
+                            <label for="data">Default text</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.Placeholder" id="placeholder" />
+                            <label for="placeholder">Placeholder</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.MaxLength" id="maxlength" />
+                            <label for="maxlength">Maxlength</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.MinLength" id="minlength" />
+                            <label for="minlength">Minlength</label>
+                        </div>
                         break;
 
                     case FieldTypes.number:
-                        <label for="name">Name</label>
-                        <input type="text" @bind-value="@ModalData.Name" id="name" />
-                        <br />
-                        <label for="integerdata">Default value</label>
-                        <input type="text" @bind-value="@ModalData.IntegerData" id="integerdata"/>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.Name" id="name" />
+                            <label for="name">Field name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="text" @bind-value="@ModalData.IntegerData" id="integerdata" />
+                            <label for="integerdata">Default value</label>
+                        </div>
                         break;
                 }
 
@@ -40,7 +49,8 @@
                 <hr />
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CloseModal()">Close</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal" @onclick="() => DiscardAndCloseModal()">Discard</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" @onclick="() => SaveAndCloseModal()">Save</button>
             </div>
         </div>
     </div>
@@ -66,11 +76,17 @@
 
     private string ModalStyle => IsOpen ? "display: block; background-color: rgba(0, 0, 0, 0.5);" : "display: none;";
 
-    private void CloseModal()
+    private void SaveAndCloseModal()
     {
         OnSave.InvokeAsync(ModalData);
         IsOpen = false;
         IsOpenChanged.InvokeAsync(false);
+    }
+
+    private void DiscardAndCloseModal()
+    {
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync(false);        
     }
 
 
