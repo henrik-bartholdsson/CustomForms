@@ -2,7 +2,7 @@
 
 namespace CustomForms.ServerApp.Dtos
 {
-    public class FormInputFieldDefinitionDto
+    public class FormInputFieldDefinitionDtoCreate
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -15,5 +15,3 @@ namespace CustomForms.ServerApp.Dtos
         public int MinLength { get; set; }
     }
 }
-
-// Maybe use a ctor to force initialization of FieldType...? cuz it's used in custom validatior.

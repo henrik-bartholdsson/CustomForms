@@ -1,0 +1,64 @@
+﻿@page "/create"
+<h3>Add Form</h3>
+
+<div class="ps-1 pb-3 pt-3 pe-2 border-1 border-dark border">
+<div class="ps-4 pb-4 pt-4 pe-4 border-1 border-dark border">
+<label for="" description"">Description</label>
+<input type="text" data-bind="@BlankForm.FormDescription" id="description"/>
+</div>
+<h4>Fields</h4>
+<hr />
+    @if (BlankForm.FormFields != null && BlankForm.FormFields.Count > 0)
+    {
+        foreach (var f in BlankForm.FormFields)
+        {
+            <div>@f.Name - @f.FieldType @f.MinLength - @f.MaxLength -- @f.StringData</div>
+        }
+    }
+</div>
+
+<hr />
+
+
+
+<CreateFieldDialog OnSave=@GetDataBack FieldType="@FieldType" Title="Create text field" IsOpen="@IsModalOpen" IsOpenChanged="@((bool isOpen) => IsModalOpen = isOpen)">
+    <p>Modal innehåll</p>
+</CreateFieldDialog>
+
+<button @onclick="@(() => OpenModal(FieldTypes.text))">Open modal</button>
+<button @onclick="@(() => OpenModal(FieldTypes.number))">Open modal</button>
+
+
+@code {
+    public BlankFormDtoCreate BlankForm { get; set; } = new BlankFormDtoCreate();
+    public FieldTypes FieldType { get; set; }
+
+    private bool IsModalOpen { get; set; } = false;
+
+    private void OpenModal(FieldTypes FieldType)
+    {
+        this.FieldType = FieldType;
+        IsModalOpen = true;
+    }
+
+
+    private void GetDataBack(FormInputFieldDefinitionDtoCreate data)
+    {
+
+        if (BlankForm.FormFields == null || BlankForm.FormFields.Count == 0)
+        {
+            BlankForm.FormFields = new List<FormInputFieldDefinitionDtoCreate>();
+        }
+        BlankForm.FormFields.Add(new FormInputFieldDefinitionDtoCreate
+            {
+                FieldType = data.FieldType,
+                MaxLength = data.MaxLength,
+                MinLength = data.MinLength,
+                Name = data.Name,
+                Placeholder = data.Placeholder,
+                StringData = data.StringData,
+                IntegerData = data.IntegerData,
+            });
+    }
+
+}

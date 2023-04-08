@@ -1,0 +1,27 @@
+﻿@page "/allforms"
+<h3>All Forms</h3>
+
+@if (Forms != null)
+{
+    foreach(var bf in Forms)
+    {
+        <p>@bf.FormDescription @bf.Id.ToString()</p>        
+    }
+}
+
+
+
+@code {
+    [Inject]
+    public IFormService FormService { get; set; }
+
+    public IEnumerable<BlankForm> Forms { get; set; }
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Forms = new List<BlankForm>();
+        Forms = await FormService.GetBlankFormList();
+    }
+}

@@ -10,14 +10,12 @@ namespace CustomForms.ServerApp.Services
     public interface IFormService
     {
         Task<Dispatch> GetDispatch(string id);
-        List<BlankForm> GetBlankFormList();
+        Task<List<BlankForm>> GetBlankFormList();
         void SubmitForm(Dispatch Dispatch);
     }
 
     public class FormService : IFormService
     {
-        List<BlankForm> _blankForms { get; set; } = new List<BlankForm>();
-        List<Dispatch> _dispatches { get; set; } = new List<Dispatch>();
         private static CustomFormsContext _context;
         public FormService(CustomFormsContext context)
         {
@@ -28,7 +26,6 @@ namespace CustomForms.ServerApp.Services
         public async Task<Dispatch> GetDispatch(string id)
         {
             Guid dispatchId;
-            BlankFormDto blankFormDto = new BlankFormDto();
 
             try
             {
@@ -52,41 +49,12 @@ namespace CustomForms.ServerApp.Services
                 throw new Exception(Notices.BlankFormAllreadtSubmitted);
             }
 
-            //var blankForm = await _context.BlankForms
-            //    .Include(x => x.FormFields)
-            //    .Where(x => x.Id == dispatch.BlankFormId)
-            //    .FirstOrDefaultAsync();
-
-            //dispatch.BlankFormDto = new BlankFormDto
-            //{
-            //    Id = blankForm.Id,
-            //    FormDescription = blankForm.FormDescription,
-            //    FormFields = new List<FormInputFieldDefinitionDto>()
-            //};
-
-            //foreach (var field in blankForm.FormFields)
-            //{
-            //    dispatch.BlankFormDto.FormFields.Add(
-            //        new FormInputFieldDefinitionDto
-            //        {
-            //            FieldType = field.FieldType,
-            //            Id = field.Id,
-            //            IntegerData = field.IntegerData,
-            //            MaxLength = 15,
-            //            MinLength = 4,
-            //            Name = field.Name,
-            //            Order = field.Order,
-            //            Placeholder = field.Placeholder,
-            //            StringData = field.StringData,
-            //        });
-            //}
-
             return dispatch;
         }
 
-        public List<BlankForm> GetBlankFormList()
+        public async Task<List<BlankForm>> GetBlankFormList()
         {
-            return _blankForms;
+            return await _context.BlankForms.ToListAsync();
         }
 
         public void SubmitForm(Dispatch Dispatch)

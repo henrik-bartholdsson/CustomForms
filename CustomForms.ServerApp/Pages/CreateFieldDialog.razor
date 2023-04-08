@@ -1,0 +1,82 @@
+﻿<div class="modal" tabindex="-1" role="dialog" style="@ModalStyle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => CloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @switch (FieldType)
+                {
+                    case FieldTypes.text:
+                    <label for="name">Name</label>
+                        <input type="text" @bind-value="@ModalData.Name" id="name" />
+                        <br />
+                        <label for="data">Datafield</label>
+                        <input type="text" @bind-value="@ModalData.StringData" id="data" />
+                        <br />
+                        <label for="placeholder">Placeholder</label>
+                        <input type="text" @bind-value="@ModalData.Placeholder" id="placeholder" />
+                        <br />
+                        <label for="maxlength">Maxlength</label>
+                        <input type="text" @bind-value="@ModalData.MaxLength" id="maxlength" />
+                        <br />
+                        <label for="minlength">Maxlength</label>
+                        <input type="text" @bind-value="@ModalData.MinLength" id="minlength"/>
+                        break;
+
+                    case FieldTypes.number:
+                        <label for="name">Name</label>
+                        <input type="text" @bind-value="@ModalData.Name" id="name" />
+                        <br />
+                        <label for="integerdata">Default value</label>
+                        <input type="text" @bind-value="@ModalData.IntegerData" id="integerdata"/>
+                        break;
+                }
+
+
+                <hr />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CloseModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public FieldTypes FieldType { get; set; }
+    [Parameter]
+    public string Title { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public bool IsOpen { get; set; }
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    [Parameter]
+    public FormInputFieldDefinitionDtoCreate ModalData { get; set; } = new FormInputFieldDefinitionDtoCreate();
+    [Parameter]
+    public EventCallback<FormInputFieldDefinitionDtoCreate> OnSave { get; set; }
+
+    private string ModalStyle => IsOpen ? "display: block; background-color: rgba(0, 0, 0, 0.5);" : "display: none;";
+
+    private void CloseModal()
+    {
+        OnSave.InvokeAsync(ModalData);
+        IsOpen = false;
+        IsOpenChanged.InvokeAsync(false);
+    }
+
+
+    protected override void OnParametersSet()
+    {
+        ModalData = new FormInputFieldDefinitionDtoCreate() { FieldType = this.FieldType };
+        base.OnParametersSet();
+    }
+}
