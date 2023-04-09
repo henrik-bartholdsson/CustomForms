@@ -1,7 +1,5 @@
 ﻿using CustomForms.Data;
-using CustomForms.ServerApp.Dtos;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomForms.ServerApp.Data
 {

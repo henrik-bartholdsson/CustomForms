@@ -1,4 +1,5 @@
-﻿using CustomForms.Data;
+﻿using AutoMapper;
+using CustomForms.Data;
 using CustomForms.ServerApp.Data;
 using CustomForms.ServerApp.Dtos;
 using CustomForms.ServerApp.Statics;
@@ -17,9 +18,11 @@ namespace CustomForms.ServerApp.Services
     public class FormService : IFormService
     {
         private static CustomFormsContext _context;
-        public FormService(CustomFormsContext context)
+        private static IMapper _mapper;
+        public FormService(CustomFormsContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
 
         }
 
