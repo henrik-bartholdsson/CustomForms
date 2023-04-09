@@ -1,5 +1,4 @@
-﻿using CustomForms.ServerApp.Validators;
-using CustomForms.Statics;
+﻿using CustomForms.Statics;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

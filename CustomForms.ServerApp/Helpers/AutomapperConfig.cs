@@ -14,18 +14,24 @@ namespace CustomForms.ServerApp.AutoMapper
                 act => act.MapFrom(src => src.FormFields))
                 .ReverseMap();
 
-            CreateMap<FormInputFieldDefinition, FormInputFieldDefinitionDtoCreate>()
-                .ReverseMap();
+            CreateMap<FormInputFieldDefinition, FormInputFieldDefinitionDtoCreate>();
+
+            CreateMap<DispatchDto, Dispatch>();
 
             CreateMap<Dispatch, DispatchDto>()
                 .ForMember(dest => dest.BlankFormDto,
-                act => act.MapFrom(src => src.BlankForm))
-                .ReverseMap();
+                act => act.MapFrom(src => src.BlankForm));
 
-            //CreateMap<BlankForm, BlankFormDtoCreate>()
-            //    .ForMember(dest => dest.FormFieldDtos,
-            //    act => act.MapFrom(src => src.FormFields))
-            //    .ReverseMap();
+            CreateMap<FormInputFieldDefinitionDtoCreate, FormInputFieldAnswer>()
+                .ForMember(dest => dest.FieldDefinitionId, act => act.MapFrom(src => src));
+
+
+
+
+
+
+
+            // CreateMap< Source, Destination >
         }
     }
 }

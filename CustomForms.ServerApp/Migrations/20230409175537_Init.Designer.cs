@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomForms.ServerApp.Migrations
 {
     [DbContext(typeof(CustomFormsContext))]
-    [Migration("20230326112616_New update")]
-    partial class Newupdate
+    [Migration("20230409175537_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,13 +62,11 @@ namespace CustomForms.ServerApp.Migrations
                     b.Property<int>("IntegerData")
                         .HasColumnType("int");
 
-                    b.Property<string>("MaxLength")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MaxLength")
+                        .HasColumnType("int");
 
-                    b.Property<string>("MinLength")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("MinLength")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -123,14 +121,22 @@ namespace CustomForms.ServerApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("DispatchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("FieldDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IntegerData")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StringData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DispatchId");
 
                     b.ToTable("FormInputFieldAnswers");
                 });
@@ -155,9 +161,23 @@ namespace CustomForms.ServerApp.Migrations
                     b.Navigation("BlankForm");
                 });
 
+            modelBuilder.Entity("CustomForms.ServerApp.Data.FormInputFieldAnswer", b =>
+                {
+                    b.HasOne("CustomForms.ServerApp.Data.Dispatch", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("DispatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CustomForms.Data.BlankForm", b =>
                 {
                     b.Navigation("FormFields");
+                });
+
+            modelBuilder.Entity("CustomForms.ServerApp.Data.Dispatch", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

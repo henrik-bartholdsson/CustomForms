@@ -118,14 +118,22 @@ namespace CustomForms.ServerApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("DispatchId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("FieldDefinitionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IntegerData")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StringData")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DispatchId");
 
                     b.ToTable("FormInputFieldAnswers");
                 });
@@ -150,9 +158,23 @@ namespace CustomForms.ServerApp.Migrations
                     b.Navigation("BlankForm");
                 });
 
+            modelBuilder.Entity("CustomForms.ServerApp.Data.FormInputFieldAnswer", b =>
+                {
+                    b.HasOne("CustomForms.ServerApp.Data.Dispatch", null)
+                        .WithMany("Answers")
+                        .HasForeignKey("DispatchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CustomForms.Data.BlankForm", b =>
                 {
                     b.Navigation("FormFields");
+                });
+
+            modelBuilder.Entity("CustomForms.ServerApp.Data.Dispatch", b =>
+                {
+                    b.Navigation("Answers");
                 });
 #pragma warning restore 612, 618
         }

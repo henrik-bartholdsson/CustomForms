@@ -63,33 +63,28 @@ namespace CustomForms.ServerApp.Services
 
         public void SubmitForm(DispatchDto dispatchDto)
         {
-            var dispatch = _mapper.Map<Dispatch>(dispatchDto);
+            var dispatch = _context.Dispatches.Where(d => d.Id == dispatchDto.Id).FirstOrDefault();
 
-            var FormInputFieldAnswers = new List<FormInputFieldAnswer>();
-
-
-            foreach (var f in dispatch.BlankForm.FormFields)
+            if (dispatch == null)
             {
-                if (f.FieldType == 0)
-                {
-                    FormInputFieldAnswers.Add(
-                        new FormInputFieldAnswer { Data = f.StringData, DispatchId = dispatch.Id });
-                }
-                else if (f.FieldType == FieldTypes.number)
-                {
-                    FormInputFieldAnswers.Add(
-                        new FormInputFieldAnswer { Data = f.IntegerData.ToString(), DispatchId = dispatch.Id });
-                }
+                throw new Exception("Error: 404");
             }
 
-            foreach (var f in FormInputFieldAnswers)
-            {
-                _context.FormInputFieldAnswers.Add(f);
-            }
             dispatch.Status = FormStatuses.Submitted;
+
+            foreach (var fa in dispatchDto.BlankFormDto.FormFieldDtos)
+            {
+                dispatch.Answers.Add(
+                    new FormInputFieldAnswer
+                    {
+                        DispatchId = dispatch.Id,
+                        IntegerData = fa.IntegerData,
+                        StringData = fa.StringData,
+                        FieldDefinitionId = fa.Id
+                    });
+            }
+
             _context.SaveChanges();
         }
     }
 }
-
-// Data sparas i definitionerna, så ska det inte vara. Kanske implementera en Vymodell eller dto?

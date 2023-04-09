@@ -1,4 +1,4 @@
-﻿using CustomForms.Data;
+﻿using CustomForms.ServerApp.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace CustomForms.ServerApp.Dtos

@@ -23,7 +23,7 @@ VALUES
 (1,3,'','Address 2',0,'',0,10,3),
 (1,4,'','Amount',1,'',0,10,3),
 (2,1,'','',0,'Company Name',0,10,3),
-(2,2,'','Address 1',0,'placeholder text',0,1,3),
+(2,2,'','Address 1',0,'placeholder text',0,10,3),
 (2,3,'','Address 2',0,'',0,10,3),
 (2,4,'','Amount Employees',1,'',0,10,3)
 
@@ -39,14 +39,20 @@ SELECT * FROM dbo.FormInputFieldAnswers
 
 SELECT * FROM dbo.FormInputFieldDefinitions
 
-SELECT * FROM Dispatches
+SELECT * FROM dbo.Dispatches
+
+SELECT * FROM dbo.BlankForms
 
 
 /***	CLEAR Answers	***
 
-update dbo.Dispatches
-set [Status] = 2
-where [Status] = 5
-Truncate table dbo.FormInputFieldAnswers
+UPDATE dbo.Dispatches
+SET [Status] = 2
+WHERE [Status] = 5
+
+TRUNCATE TABLE dbo.FormInputFieldAnswers
+TRUNCATE TABLE dbo.Dispatches
+TRUNCATE TABLE dbo.FormInputFieldDefinitions
+TRUNCATE TABLE dbo.BlankForms
 
 ***/
