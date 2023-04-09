@@ -18,14 +18,14 @@ SET IDENTITY_INSERT dbo.BlankForms OFF
 
 INSERT INTO dbo.FormInputFieldDefinitions ([BlankFormId],[Order],[StringData],[Name],[FieldType],[Placeholder],[IntegerData],[MaxLength],[MinLength])
 VALUES
-(1,1,'','',0,'Name',0,'10','3'),
-(1,2,'','Address 1',0,'placeholder text',0,'10','3'),
-(1,3,'','Address 2',0,'',0,'10','3'),
-(1,4,'','Amount',1,'',0,'10','3'),
-(2,1,'','',0,'Company Name',0,'10','3'),
-(2,2,'','Address 1',0,'placeholder text',0,'1','3'),
-(2,3,'','Address 2',0,'',0,'10','3'),
-(2,4,'','Amount Employees',1,'',0,'10','3')
+(1,1,'','',0,'Name',0,10,3),
+(1,2,'','Address 1',0,'placeholder text',0,10,3),
+(1,3,'','Address 2',0,'',0,10,3),
+(1,4,'','Amount',1,'',0,10,3),
+(2,1,'','',0,'Company Name',0,10,3),
+(2,2,'','Address 1',0,'placeholder text',0,1,3),
+(2,3,'','Address 2',0,'',0,10,3),
+(2,4,'','Amount Employees',1,'',0,10,3)
 
 INSERT INTO dbo.Dispatches ([Email],[Status],[Id],[BlankFormId])
 VALUES

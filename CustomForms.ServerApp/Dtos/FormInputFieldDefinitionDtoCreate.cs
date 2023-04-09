@@ -1,4 +1,5 @@
-﻿using CustomForms.Statics;
+﻿using CustomForms.ServerApp.Validators;
+using CustomForms.Statics;
 
 namespace CustomForms.ServerApp.Dtos
 {
@@ -7,6 +8,7 @@ namespace CustomForms.ServerApp.Dtos
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Placeholder { get; set; } = string.Empty;
+        [FormFieldValidator]
         public string StringData { get; set; } = string.Empty;
         public int IntegerData { get; set; }
         public int Order { get; set; } = 0;
