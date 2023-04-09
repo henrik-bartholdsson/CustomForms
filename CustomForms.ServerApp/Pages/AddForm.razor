@@ -5,19 +5,68 @@
 <div class="ps-4 pb-4 pt-4 pe-4 border-1 border-dark border">
 <label for="" description"">Description</label>
 <input type="text" data-bind="@BlankForm.FormDescription" id="description"/>
+<lable>ID: e456lkne56w4nbölk</lable>
 </div>
 <h4>Fields</h4>
 <hr />
     @if (BlankForm.FormFields != null && BlankForm.FormFields.Count > 0)
     {
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item w-25">Type</li>
+            <li class="list-group-item w-50">Name</li>
+            <li class="list-group-item w-25">Value</li>
+            <li class="list-group-item w-50">Placeholder</li>
+            <li class="list-group-item w-25">Min</li>
+            <li class="list-group-item w-25">Max</li>
+            <li class="list-group-item w-100">Preview</li>
+            <li class="list-group-item w-25"></li>
+        </ul>
         foreach (var f in BlankForm.FormFields)
         {
-            <div>@f.Name - @f.FieldType @f.MinLength - @f.MaxLength -- @f.StringData</div>
+            if(f.FieldType == FieldTypes.text)
+            {
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item w-25">@f.FieldType</li>
+                    <li class="list-group-item w-50">@f.Name</li>
+                    <li class="list-group-item w-25">@f.StringData</li>
+                    <li class="list-group-item w-50">@f.Placeholder</li>
+                    <li class="list-group-item w-25">@f.MinLength</li>
+                    <li class="list-group-item w-25">@f.MaxLength</li>
+                    <li class="list-group-item w-100">
+                        <div class="form-floating w-100">
+                            <input class="form-control" type="text" maxlength="@f.MaxLength" placeholder="@f.Placeholder" value="@f.StringData" id="name" />
+                            <label for="name">@f.Name</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item w-25">
+                        <a>Edit</a>
+                        <a>Delete</a>
+                    </li>
+                </ul>
+            } else if(f.FieldType == FieldTypes.number)
+            {
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item w-25">@f.FieldType</li>
+                    <li class="list-group-item w-50">@f.Name</li>
+                    <li class="list-group-item w-25">@f.IntegerData</li>
+                    <li class="list-group-item w-50"></li>
+                    <li class="list-group-item w-25"></li>
+                    <li class="list-group-item w-25"></li>
+                    <li class="list-group-item w-100">
+                        <div class="form-floating w-100">
+                            <input class="form-control w-50" type="number" value="@f.IntegerData" id="name" />
+                            <label for="name">@f.Name</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item w-25">
+                        <a>Edit</a>
+                        <a>Delete</a>
+                    </li>
+                </ul>                
+            }
         }
     }
 </div>
-
-<hr />
 
 
 
@@ -25,9 +74,11 @@
     <p>Modal innehåll</p>
 </CreateFieldDialog>
 
-<button @onclick="@(() => OpenModal(FieldTypes.text))">Open modal</button>
-<button @onclick="@(() => OpenModal(FieldTypes.number))">Open modal</button>
-
+<div class="btn-group mt-1" role="group" aria-label="Basic example">
+    <button class="btn btn-primary" @onclick="@(() => OpenModal(FieldTypes.text))">Text</button>
+    <button class="btn btn-primary" @onclick="@(() => OpenModal(FieldTypes.number))">Number</button>
+    <button class="btn btn-primary" @onclick="@(() => OpenModal(FieldTypes.number))">Radio</button>
+</div>
 
 @code {
     public BlankFormDtoCreate BlankForm { get; set; } = new BlankFormDtoCreate();
