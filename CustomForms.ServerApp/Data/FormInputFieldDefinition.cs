@@ -11,14 +11,14 @@ namespace CustomForms.Data
         public int Id { get; set; }
         [ForeignKey("BlankForm")]
         public int BlankFormId { get; set; }
-        public string Name { get; set; } 
+        public string Name { get; set; } = string.Empty;
         public string Placeholder { get; set; } = string.Empty;
         [FormFieldValidator]
         public string StringData { get; set; } = string.Empty;
         public int IntegerData { get; set; }
         public int Order { get; set; } = 0;
         public FieldTypes FieldType { get; set; }
-        public string MaxLength { get; set; } = string.Empty;
-        public string MinLength { get; set; } = string.Empty;
+        public int MaxLength { get; set; }
+        public int MinLength { get; set; }
     }
 }

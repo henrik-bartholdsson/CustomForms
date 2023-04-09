@@ -1,14 +1,14 @@
 ﻿using CustomForms.Data;
 using System.ComponentModel.DataAnnotations;
 
-namespace CustomForms.ServerApp.Data
+namespace CustomForms.ServerApp.Dtos
 {
-    public class Dispatch
+    public class DispatchDto
     {
         public Guid Id { get; set; }
         public string Email { get; set; } = string.Empty;
         [ValidateComplexType]
-        public BlankForm BlankForm { get; set; } = new BlankForm();
+        public BlankFormDtoCreate BlankFormDto { get; set; } = new BlankFormDtoCreate();
         public int BlankFormId { get; set; }
         public int Status { get; set; }
     }

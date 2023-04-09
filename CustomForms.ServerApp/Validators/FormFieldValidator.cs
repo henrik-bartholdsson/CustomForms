@@ -1,4 +1,5 @@
 ﻿using CustomForms.Data;
+using CustomForms.ServerApp.Dtos;
 using CustomForms.ServerApp.Statics;
 using CustomForms.Statics;
 using System.ComponentModel.DataAnnotations;
@@ -16,31 +17,38 @@ namespace CustomForms.ServerApp.Validators
 
             object formFieldInstance = validationContext.ObjectInstance;
             Type type = formFieldInstance.GetType();
-            //PropertyInfo FormFieldType = type.GetProperty(Notices.FormFieldType);
-            //object propertyValue = FormFieldType.GetValue(formFieldInstance);
 
-            var formFieldObject = (FormInputFieldDefinition)formFieldInstance;
-
-            //FieldTypes currentFieldType = new FieldTypes();  
-            //Enum.TryParse(FormFieldType.ToString(), out currentFieldType);
+            var formFieldObject = (FormInputFieldDefinitionDtoCreate)formFieldInstance;
 
             switch (formFieldObject.FieldType)
             {
                 case FieldTypes.text:
-                    if (!String.IsNullOrEmpty(formFieldObject.MaxLength)
-                        && int.Parse(formFieldObject.MaxLength) < formFieldObject.StringData.Length)
+                    if (formFieldObject.MaxLength > 0
+                        && formFieldObject.MaxLength < formFieldObject.StringData.Length)
                     {
                         return new ValidationResult(Notices.FormFieldStringToLong);
                     }
 
-                    if (!String.IsNullOrEmpty(formFieldObject.MinLength)
-                        && int.Parse(formFieldObject.MinLength) > formFieldObject.StringData.Length)
+                    if (formFieldObject.MinLength > 0
+                        && formFieldObject.MinLength > formFieldObject.StringData.Length)
                     {
                         return new ValidationResult(Notices.FormFieldStringToShort);
                     }
 
                     break;
                 case FieldTypes.number:
+                    if(formFieldObject.MaxLength != formFieldObject.MinLength)
+                    {
+                        if (formFieldObject.MaxLength < formFieldObject.IntegerData)
+                        {
+                            return new ValidationResult(Notices.FormFieldIntergerDataToBig);
+                        }
+
+                        if (formFieldObject.MinLength > formFieldObject.IntegerData)
+                        {
+                            return new ValidationResult(Notices.FormFieldIntergerDataToSmall);
+                        }
+                    }
 
                     var theIntValue = value.ToString();
                     break;

@@ -9,7 +9,7 @@
 </div>
 <h4>Fields</h4>
 <hr />
-    @if (BlankForm.FormFields != null && BlankForm.FormFields.Count > 0)
+    @if (BlankForm.FormFieldDtos != null && BlankForm.FormFieldDtos.Count > 0)
     {
         <ul class="list-group list-group-horizontal">
             <li class="list-group-item w-25">Type</li>
@@ -21,7 +21,7 @@
             <li class="list-group-item w-100">Preview</li>
             <li class="list-group-item w-25"></li>
         </ul>
-        foreach (var f in BlankForm.FormFields)
+        foreach (var f in BlankForm.FormFieldDtos)
         {
             if(f.FieldType == FieldTypes.text)
             {
@@ -96,11 +96,11 @@
     private void GetDataBack(FormInputFieldDefinitionDtoCreate data)
     {
 
-        if (BlankForm.FormFields == null || BlankForm.FormFields.Count == 0)
+        if (BlankForm.FormFieldDtos == null || BlankForm.FormFieldDtos.Count == 0)
         {
-            BlankForm.FormFields = new List<FormInputFieldDefinitionDtoCreate>();
+            BlankForm.FormFieldDtos = new List<FormInputFieldDefinitionDtoCreate>();
         }
-        BlankForm.FormFields.Add(new FormInputFieldDefinitionDtoCreate
+        BlankForm.FormFieldDtos.Add(new FormInputFieldDefinitionDtoCreate
             {
                 FieldType = data.FieldType,
                 MaxLength = data.MaxLength,

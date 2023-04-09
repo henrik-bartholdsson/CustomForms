@@ -6,12 +6,12 @@
 <br />
 
 
-@if (DispatchObj != null)
+@if (DispatchDto != null)
 {
-    <EditForm Model="DispatchObj" OnValidSubmit="HandleSubmit">
+    <EditForm Model="DispatchDto" OnValidSubmit="HandleSubmit">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
-        @foreach (var f in DispatchObj.BlankForm.FormFields)
+        @foreach (var f in DispatchDto.BlankFormDto.FormFieldDtos)
         {
             <div style="margin-bottom:0.7em">
                 <InputField FormInputField="@f" />
@@ -40,16 +40,16 @@ else
     public IFormService FormService { get; set; }
 
     [Parameter]
-    public string Id { get; set; }
+    public string Id { get; set; } = string.Empty;
 
-    public Dispatch DispatchObj { get; set; }
+    public DispatchDto DispatchDto { get; set; }
 
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
     public void HandleSubmit()
     {
-        FormService.SubmitForm(DispatchObj);
-        DispatchObj = null;
+        FormService.SubmitForm(DispatchDto);
+        DispatchDto = null;
         Message = Notices.BlankFormSubmitted;
     }
 
@@ -61,7 +61,7 @@ else
         {
             try
             {
-                DispatchObj = await FormService.GetDispatch(Id);
+                DispatchDto = await FormService.GetDispatch(Id);
             }
             catch (Exception ex)
             {

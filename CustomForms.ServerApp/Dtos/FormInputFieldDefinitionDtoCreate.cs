@@ -7,7 +7,7 @@ namespace CustomForms.ServerApp.Dtos
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Placeholder { get; set; } = string.Empty;
-        public string StringData { get; set; }
+        public string StringData { get; set; } = string.Empty;
         public int IntegerData { get; set; }
         public int Order { get; set; } = 0;
         public FieldTypes FieldType { get; set; }
